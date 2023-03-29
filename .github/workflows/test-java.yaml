@@ -80,4 +80,4 @@ jobs:
       - name: Build and install libraries
         working-directory: bindings/prql-java
         run:
-          mvn --batch-mode --show-version --strict-checksums -DskipTests package
+          mvn --batch-mode --show-version --strict-checksums install
