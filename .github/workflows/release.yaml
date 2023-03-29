@@ -70,7 +70,7 @@ jobs:
           directory: bindings/prql-java
           maven_profiles: release
           maven_args:
-            -Drevision=0.6.1 -q --batch-mode --show-version --strict-checksums
+            -DskipTests -Drevision=0.6.1 -q --batch-mode --show-version --strict-checksums
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
           nexus_username: ${{ secrets.SONATYPE_USER }}
