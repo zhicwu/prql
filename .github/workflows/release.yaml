@@ -19,7 +19,7 @@ jobs:
             suffix: ".dylib"
           - os: ubuntu-latest
             directory: linux-x86-64
-            target: x86_64-unknown-linux-gnu
+            target: x86_64-unknown-linux-musl
             suffix: ".so"
           - os: windows-latest
             directory: win32-x86-64
