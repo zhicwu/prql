@@ -26,10 +26,9 @@ public class CompileOptions {
     /**
      * Default constructor.
      *
-     * @param format   whether to format the output
-     * @param dialect  compilation target, null is treated as empty string
-     * @param comment  whether to append signature comment in output
-     * @param fallback whether to fall back to the input when failed to compile PRQL
+     * @param format  whether to format the output
+     * @param dialect compilation target, null is treated as empty string
+     * @param comment whether to append signature comment in output
      */
     public CompileOptions(boolean format, Dialect dialect, boolean comment) {
         this.format = format;
@@ -45,10 +44,9 @@ public class CompileOptions {
     /**
      * Constructor for custom target.
      *
-     * @param format   whether to format the output
-     * @param target   custom compilation target, null is treated as empty string
-     * @param comment  whether to append signature comment in output
-     * @param fallback whether to fall back to the input when failed to compile PRQL
+     * @param format  whether to format the output
+     * @param target  custom compilation target, null is treated as empty string
+     * @param comment whether to append signature comment in output
      */
     public CompileOptions(boolean format, String target, boolean comment) {
         this.format = format;
