@@ -30,7 +30,7 @@ jobs:
             suffix: ".dylib"
           - os: ubuntu-latest
             directory: linux-x86-64
-            target: x86_64-unknown-linux-musl
+            target: x86_64-unknown-linux-gnu
             suffix: ".so"
           - os: windows-latest
             directory: win32-x86-64
@@ -48,16 +48,13 @@ jobs:
           override: true
           toolchain: stable
           target: ${{ matrix.target }}
-      - name: Install packages
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt install musl-tools -y
       - name: Build
         uses: richb-hanover/cargo@v1.1.0
         with:
           command: build
           args: --target=${{ matrix.target }} --release -p prql-lib
         env:
-          RUSTFLAGS: -C target-feature=-crt-static
+          RUSTFLAGS: -C target-feature=+crt-static
       - name: List files
         if: matrix.os == 'ubuntu-latest'
         run: ls -alFR target/${{ matrix.target }}/release
