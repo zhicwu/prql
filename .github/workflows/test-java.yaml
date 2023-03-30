@@ -57,7 +57,7 @@ jobs:
           command: build
           args: --target=${{ matrix.target }} --release -p prql-lib
         env:
-          CARGO_TARGET_x86_64-unknown-linux-musl: -C target-feature=+crt-static
+          RUSTFLAGS: -C target-feature=-crt-static
       - name: List files
         if: matrix.os == 'ubuntu-latest'
         run: ls -alFR target/${{ matrix.target }}/release
