@@ -28,7 +28,7 @@ jobs:
             directory: darwin-aarch64
             target: aarch64-apple-darwin
             suffix: ".dylib"
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             directory: linux-x86-64
             target: x86_64-unknown-linux-gnu
             suffix: ".so"
