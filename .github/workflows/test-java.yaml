@@ -48,11 +48,9 @@ jobs:
           override: true
           toolchain: stable
           target: ${{ matrix.target }}
-      - name: Install musl-tools
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: musl-tools # provides musl-gcc
-          version: 1.0
+      - name: Install packages
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt install musl-tools -y
       - name: Build
         uses: richb-hanover/cargo@v1.1.0
         with:
