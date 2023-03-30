@@ -28,7 +28,7 @@ jobs:
             directory: darwin-aarch64
             target: aarch64-apple-darwin
             suffix: ".dylib"
-          - os: ubuntu-latest
+          - os: ubuntu-16.04
             directory: linux-x86-64
             target: x86_64-unknown-linux-gnu
             suffix: ".so"
@@ -53,8 +53,6 @@ jobs:
         with:
           command: build
           args: --target=${{ matrix.target }} --release -p prql-lib
-        env:
-          RUSTFLAGS: -C target-feature=+crt-static
       - name: List files
         if: matrix.os == 'ubuntu-latest'
         run: ls -alFR target/${{ matrix.target }}/release
