@@ -28,7 +28,7 @@ jobs:
             directory: darwin-aarch64
             target: aarch64-apple-darwin
             suffix: ".dylib"
-          - os: ubuntu-16.04
+          - os: ubuntu-latest
             directory: linux-x86-64
             target: x86_64-unknown-linux-gnu
             suffix: ".so"
@@ -46,7 +46,7 @@ jobs:
         with:
           profile: minimal
           override: true
-          toolchain: stable
+          toolchain: nightly
           target: ${{ matrix.target }}
       - name: Build
         uses: richb-hanover/cargo@v1.1.0

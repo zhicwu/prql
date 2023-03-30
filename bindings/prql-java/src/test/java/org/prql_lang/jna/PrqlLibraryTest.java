@@ -25,7 +25,8 @@ public class PrqlLibraryTest {
             result = func.get();
             Assert.assertNotNull(result.output, "Output should never be null");
             if (output != null && output.endsWith("-- ")) {
-                Assert.assertTrue(result.output.startsWith(output));
+                Assert.assertTrue(result.output.startsWith(output),
+                        "Expects result start with [" + output + "] but found [" + result.output + "]");
             } else {
                 Assert.assertEquals(result.output, output);
             }
@@ -149,7 +150,8 @@ public class PrqlLibraryTest {
         checkCompileOutput(() -> lib.pl_to_rq("invalid pl(not json)"), "");
         checkCompileOutput(() -> lib.pl_to_rq(
                 "[{\"Main\":{\"Pipeline\":{\"exprs\":[{\"FuncCall\":{\"name\":{\"Ident\":[\"from\"]},\"args\":[{\"Ident\":[\"test\"]}]}},{\"FuncCall\":{\"name\":{\"Ident\":[\"take\"]},\"args\":[{\"Literal\":{\"Integer\":10}}]}}]}}}]"),
-                "{\"def\":{\"version\":null,\"other\":{}},\"tables\":[{\"id\":0,\"name\":null,\"relation\":{\"kind\":{\"ExternRef\":{\"LocalTable\":\"test\"}},\"columns\":[\"Wildcard\"]}}],\"relation\":{\"kind\":{\"Pipeline\":[{\"From\":{\"source\":0,\"columns\":[[\"Wildcard\",0]],\"name\":\"test\"}},{\"Take\":{\"range\":{\"start\":null,\"end\":{\"kind\":{\"Literal\":{\"Integer\":10}},\"span\":null}},\"partition\":[],\"sort\":[]}},{\"Select\":[0]}]},\"columns\":[\"Wildcard\"]}}");
+                // "{\"def\":{\"version\":null,\"other\":{}},\"tables\":[{\"id\":0,\"name\":null,\"relation\":{\"kind\":{\"ExternRef\":{\"LocalTable\":\"test\"}},\"columns\":[\"Wildcard\"]}}],\"relation\":{\"kind\":{\"Pipeline\":[{\"From\":{\"source\":0,\"columns\":[[\"Wildcard\",0]],\"name\":\"test\"}},{\"Take\":{\"range\":{\"start\":null,\"end\":{\"kind\":{\"Literal\":{\"Integer\":10}},\"span\":null}},\"partition\":[],\"sort\":[]}},{\"Select\":[0]}]},\"columns\":[\"Wildcard\"]}}");
+                "{\"def\":{\"version\":null,\"other\":{}},\"tables\":[{\"id\":0,\"name\":null,\"relation\":{\"kind\":{\"ExternRef\":\"test\"},\"columns\":[\"Wildcard\"]}}],\"relation\":{\"kind\":{\"Pipeline\":[{\"From\":{\"source\":0,\"columns\":[[\"Wildcard\",0]],\"name\":\"test\"}},{\"Take\":{\"range\":{\"start\":null,\"end\":{\"kind\":{\"Literal\":{\"Integer\":10}},\"span\":null}},\"partition\":[],\"sort\":[]}},{\"Select\":[0]}]},\"columns\":[\"Wildcard\"]}}");
     }
 
     @Test
@@ -160,7 +162,9 @@ public class PrqlLibraryTest {
         checkCompileOutput(() -> lib.rq_to_sql("", null), "");
         checkCompileOutput(() -> lib.rq_to_sql(" ", null), "");
         checkCompileOutput(() -> lib.rq_to_sql("invalid rq(not json)", null), "");
-        final String rq = "{\"def\":{\"version\":null,\"other\":{}},\"tables\":[{\"id\":0,\"name\":null,\"relation\":{\"kind\":{\"ExternRef\":{\"LocalTable\":\"test\"}},\"columns\":[\"Wildcard\"]}}],\"relation\":{\"kind\":{\"Pipeline\":[{\"From\":{\"source\":0,\"columns\":[[\"Wildcard\",0]],\"name\":\"test\"}},{\"Take\":{\"range\":{\"start\":null,\"end\":{\"kind\":{\"Literal\":{\"Integer\":10}},\"span\":null}},\"partition\":[],\"sort\":[]}},{\"Select\":[0]}]},\"columns\":[\"Wildcard\"]}}";
+        // final String rq =
+        // "{\"def\":{\"version\":null,\"other\":{}},\"tables\":[{\"id\":0,\"name\":null,\"relation\":{\"kind\":{\"ExternRef\":{\"LocalTable\":\"test\"}},\"columns\":[\"Wildcard\"]}}],\"relation\":{\"kind\":{\"Pipeline\":[{\"From\":{\"source\":0,\"columns\":[[\"Wildcard\",0]],\"name\":\"test\"}},{\"Take\":{\"range\":{\"start\":null,\"end\":{\"kind\":{\"Literal\":{\"Integer\":10}},\"span\":null}},\"partition\":[],\"sort\":[]}},{\"Select\":[0]}]},\"columns\":[\"Wildcard\"]}}";
+        final String rq = "{\"def\":{\"version\":null,\"other\":{}},\"tables\":[{\"id\":0,\"name\":null,\"relation\":{\"kind\":{\"ExternRef\":\"test\"},\"columns\":[\"Wildcard\"]}}],\"relation\":{\"kind\":{\"Pipeline\":[{\"From\":{\"source\":0,\"columns\":[[\"Wildcard\",0]],\"name\":\"test\"}},{\"Take\":{\"range\":{\"start\":null,\"end\":{\"kind\":{\"Literal\":{\"Integer\":10}},\"span\":null}},\"partition\":[],\"sort\":[]}},{\"Select\":[0]}]},\"columns\":[\"Wildcard\"]}}";
         checkCompileOutput(() -> lib.rq_to_sql(rq, null), "SELECT\n  *\nFROM\n  test\nLIMIT\n  10\n\n-- ");
 
         OptionsStruct.ByValue options = new OptionsStruct.ByValue();
