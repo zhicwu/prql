@@ -56,9 +56,11 @@ jobs:
         with:
           command: build
           args: --target=${{ matrix.target }} --release -p prql-lib
-      - name: Install packages
+        env:
+          CARGO_TARGET_x86_64-unknown-linux-musl: -C target-feature=+crt-static
+      - name: List files
         if: matrix.os == 'ubuntu-latest'
-        run: ls -alF target/${{ matrix.target }}/release
+        run: ls -alFR target/${{ matrix.target }}/release
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.directory }}
